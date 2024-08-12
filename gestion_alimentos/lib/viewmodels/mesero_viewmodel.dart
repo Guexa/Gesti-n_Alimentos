@@ -41,6 +41,14 @@ class MeseroViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> markMesaAsCleaning(int idMesa) async {
+    try {
+      await _meseroService.markMesaAsCleaning(idMesa);
+    } catch (err) {
+      print('Error marking mesa as cleaning: $err');
+    }
+  }
+
   void addSelectedItem(Map<String, dynamic> item) {
     final existingItem = _selectedItems.firstWhere(
       (i) => i['nombre'] == item['nombre'],
