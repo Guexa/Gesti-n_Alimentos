@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../viewmodels/empleado_viewmodel.dart';
 
 class ReportesScreen extends StatefulWidget {
   const ReportesScreen({super.key});
@@ -8,19 +10,20 @@ class ReportesScreen extends StatefulWidget {
 }
 
 class _ReportesScreenState extends State<ReportesScreen> {
-  final List<Map<String, dynamic>> empleados = [
-    {'id': 1, 'nombre': 'Juan Pérez', 'usuario': 'juanp', 'rol': 'Host'},
-    {'id': 2, 'nombre': 'Ana Gómez', 'usuario': 'anag', 'rol': 'Meseros'},
-    // Otros empleados
-  ];
-
-  final List<String> roles = ['Host', 'Meseros', 'Cocina', 'Corredores', 'Caja', 'Administrador'];
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<EmpleadoViewModel>(context, listen: false).fetchEmployees();
+    });
+  }
 
   void _showEmployeeDialog(BuildContext context, Map<String, dynamic>? empleado, {required bool isEditing}) {
-    final nombreController = TextEditingController(text: empleado?['nombre']);
-    final usuarioController = TextEditingController(text: empleado?['usuario']);
-    final passwordController = TextEditingController(); // Controlador para la contraseña
-    String rolSeleccionado = empleado != null && roles.contains(empleado['rol']) ? empleado['rol'] : roles.first;
+    final viewModel = Provider.of<EmpleadoViewModel>(context, listen: false);
+    final nombreController = TextEditingController(text: empleado?['name'] ?? '');
+    final usuarioController = TextEditingController(text: empleado?['users'] ?? '');
+    final passwordController = TextEditingController();
+    String rolSeleccionado = empleado != null && viewModel.roles.contains(empleado['role']) ? empleado['role'] : viewModel.roles.first;
 
     showDialog(
       context: context,
@@ -47,7 +50,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 value: rolSeleccionado,
-                items: roles.map((String role) {
+                items: viewModel.roles.map((String role) {
                   return DropdownMenuItem<String>(
                     value: role,
                     child: Text(role),
@@ -60,7 +63,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
                 },
                 decoration: const InputDecoration(labelText: 'Rol'),
               ),
-              if (!isEditing) // Mostrar el campo de contraseña solo al agregar
+              if (!isEditing)
                 Column(
                   children: [
                     const SizedBox(height: 10),
@@ -81,11 +84,21 @@ class _ReportesScreenState extends State<ReportesScreen> {
               child: const Text('Cancelar', style: TextStyle(color: Colors.deepOrange)),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 if (isEditing) {
-                  _updateEmployee(empleado!['id'], nombreController.text, usuarioController.text, rolSeleccionado);
+                  await viewModel.updateEmployee(
+                    empleado!['idusuario'],
+                    nombreController.text,
+                    usuarioController.text,
+                    rolSeleccionado,
+                  );
                 } else {
-                  _addEmployee(nombreController.text, usuarioController.text, rolSeleccionado, passwordController.text);
+                  await viewModel.addEmployee(
+                    nombreController.text,
+                    usuarioController.text,
+                    rolSeleccionado,
+                    passwordController.text,
+                  );
                 }
                 Navigator.of(context).pop();
               },
@@ -95,27 +108,6 @@ class _ReportesScreenState extends State<ReportesScreen> {
         );
       },
     );
-  }
-
-  void _addEmployee(String nombre, String usuario, String rol, String contrasenia) {
-    setState(() {
-      empleados.add({'id': empleados.length + 1, 'nombre': nombre, 'usuario': usuario, 'rol': rol, 'contraseña': contrasenia});
-    });
-  }
-
-  void _updateEmployee(int id, String nombre, String usuario, String rol) {
-    setState(() {
-      final index = empleados.indexWhere((empleado) => empleado['id'] == id);
-      if (index != -1) {
-        empleados[index] = {'id': id, 'nombre': nombre, 'usuario': usuario, 'rol': rol};
-      }
-    });
-  }
-
-  void _deleteEmployee(int id) {
-    setState(() {
-      empleados.removeWhere((empleado) => empleado['id'] == id);
-    });
   }
 
   void _showReportDialog(BuildContext context) {
@@ -157,7 +149,6 @@ class _ReportesScreenState extends State<ReportesScreen> {
             ),
             TextButton(
               onPressed: () {
-                // Lógica para generar el reporte según el periodo seleccionado
                 print('Reporte generado para: $selectedPeriod');
                 Navigator.of(context).pop();
               },
@@ -171,6 +162,8 @@ class _ReportesScreenState extends State<ReportesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<EmpleadoViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reportes'),
@@ -191,16 +184,20 @@ class _ReportesScreenState extends State<ReportesScreen> {
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.all(16.0),
-                itemCount: empleados.length,
+                itemCount: viewModel.empleados.length,
                 itemBuilder: (context, index) {
-                  final empleado = empleados[index];
+                  final empleado = viewModel.empleados[index];
+                  final nombre = empleado['name'] ?? 'Nombre no disponible';
+                  final usuario = empleado['users'] ?? 'Usuario no disponible';
+                  final rol = empleado['role'] ?? 'Rol no disponible';
+
                   return Card(
                     color: Colors.white.withOpacity(0.85),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
                     margin: const EdgeInsets.only(bottom: 15.0),
                     child: ListTile(
-                      title: Text(empleado['nombre'], style: const TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold)),
-                      subtitle: Text('${empleado['usuario']} - ${empleado['rol']}', style: const TextStyle(color: Colors.black54)),
+                      title: Text(nombre, style: const TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold)),
+                      subtitle: Text('$usuario - $rol', style: const TextStyle(color: Colors.black54)),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
@@ -210,7 +207,9 @@ class _ReportesScreenState extends State<ReportesScreen> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete, color: Colors.deepOrange),
-                            onPressed: () => _deleteEmployee(empleado['id']),
+                            onPressed: () async {
+                              await viewModel.deleteEmployee(empleado['idusuario']);
+                            },
                           ),
                         ],
                       ),

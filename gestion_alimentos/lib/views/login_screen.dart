@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_alimentos/views/menu_screen.dart';
+import 'package:provider/provider.dart';
+import '../viewmodels/empleado_viewmodel.dart';
+import 'menu_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final empleadoViewModel = Provider.of<EmpleadoViewModel>(context, listen: false);
+    final TextEditingController userController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -29,8 +35,9 @@ class LoginScreen extends StatelessWidget {
                           size: 100, color: Colors.white),
                       const SizedBox(height: 40),
                       TextField(
+                        controller: userController,
                         decoration: InputDecoration(
-                          labelText: 'Email',
+                          labelText: 'Usuario',
                           labelStyle: const TextStyle(color: Colors.white),
                           filled: true,
                           fillColor: Colors.white24,
@@ -39,12 +46,13 @@ class LoginScreen extends StatelessWidget {
                             borderSide: BorderSide.none,
                           ),
                           prefixIcon:
-                              const Icon(Icons.email, color: Colors.white),
+                              const Icon(Icons.person, color: Colors.white),
                         ),
                         style: const TextStyle(color: Colors.white),
                       ),
                       const SizedBox(height: 20),
                       TextField(
+                        controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Contraseña',
@@ -62,13 +70,25 @@ class LoginScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 40),
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MenuScreen(),
-                            ),
-                          );
+                        onPressed: () async {
+                          final user = userController.text;
+                          final password = passwordController.text;
+
+                          try {
+                            await empleadoViewModel.authenticateUser(user, password);
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const MenuScreen(),
+                              ),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Error: ${e.toString()}'),
+                              ),
+                            );
+                          }
                         },
                         child: const Text('Iniciar Sesión'),
                       ),
