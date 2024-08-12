@@ -92,7 +92,7 @@ class MenuScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const CorredoresScreen(mesasAsignadas: [5], mesasParaLimpieza: [5],)),
+                            builder: (context) => const CorredoresScreen()),
                       );
                     },
                   ),
