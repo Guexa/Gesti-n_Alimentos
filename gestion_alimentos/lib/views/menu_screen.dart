@@ -103,14 +103,14 @@ class MenuScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const CajaScreen(cuentasPendientes: [],)),
+                            builder: (context) => const CajaScreen()),
                       );
                     },
                   ),
                   ListTile(
-                    leading: const Icon(Icons.report,
+                    leading: const Icon(Icons.ad_units_rounded,
                         color: Colors.deepOrange),
-                    title: const Text('Reportes'),
+                    title: const Text('Gestión de Usuarios'),
                     onTap: () {
                       Navigator.push(
                         context,
