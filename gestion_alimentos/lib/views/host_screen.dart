@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_alimentos/viewmodels/mesa_viewmodel.dart';
+import 'package:provider/provider.dart';
 
-class HostScreen extends StatelessWidget {
+class HostScreen extends StatefulWidget {
   const HostScreen({super.key});
 
   @override
+  _HostScreenState createState() => _HostScreenState();
+}
+
+class _HostScreenState extends State<HostScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final mesasViewModel = Provider.of<MesaViewModel>(context, listen: false);
+    mesasViewModel.fetchMesas();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final mesasViewModel = Provider.of<MesaViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Host'),
@@ -27,26 +43,29 @@ class HostScreen extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
           ),
-          itemCount: 20,
+          itemCount: mesasViewModel.mesas.length,
           itemBuilder: (context, index) {
-            return _buildTableCard(index + 1, context);
+            final mesa = mesasViewModel.mesas[index];
+            final mesaNumber = mesa['idmesa'] ?? index + 1;
+            final status = mesa['status'] ?? 'Libre';
+            final meseroNombre = mesa['asignada_para'] ?? '';
+            final statusColor = _getStatusColor(status);
+
+            return _buildTableCard(mesaNumber, statusColor, status, meseroNombre, context);
           },
         ),
       ),
     );
   }
 
-  Widget _buildTableCard(int tableNumber, BuildContext context) {
-    final status = ['Libre', 'Asignada', 'Pedido', 'Comiendo', 'Limpieza'][tableNumber % 5];
-    final statusColor = _getStatusColor(status);
-
+  Widget _buildTableCard(int mesaNumber, Color statusColor, String status, String meseroNombre, BuildContext context) {
     return GestureDetector(
-      onTap: () => _assignTable(context, tableNumber),
+      onTap: () => _assignTable(context, mesaNumber),
       child: Card(
         color: statusColor,
         child: Center(
           child: Text(
-            'Mesa $tableNumber\n$status',
+            'Mesa $mesaNumber\n$status\n${status == 'Asignada' ? 'Mesero: $meseroNombre' : ''}',
             textAlign: TextAlign.center,
             style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
@@ -72,15 +91,19 @@ class HostScreen extends StatelessWidget {
     }
   }
 
-  void _assignTable(BuildContext context, int tableNumber) {
+  void _assignTable(BuildContext context, int mesaNumber) {
+    final mesasViewModel = Provider.of<MesaViewModel>(context, listen: false);
+    final nombreController = TextEditingController();
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Asignar Mesa $tableNumber'),
-          content: const TextField(
-            decoration: InputDecoration(
-              labelText: 'Nombre del Cliente',
+          title: Text('Asignar Mesa $mesaNumber'),
+          content: TextField(
+            controller: nombreController,
+            decoration: const InputDecoration(
+              labelText: 'Nombre del Mesero que Atenderá',
             ),
             autofocus: true,
           ),
@@ -92,8 +115,11 @@ class HostScreen extends StatelessWidget {
               child: const Text('Cancelar'),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
+              onPressed: () async {
+                if (nombreController.text.isNotEmpty) {
+                  await mesasViewModel.assignTable(mesaNumber, nombreController.text);
+                  Navigator.of(context).pop();
+                }
               },
               child: const Text('Asignar'),
             ),

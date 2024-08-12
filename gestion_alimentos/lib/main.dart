@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_alimentos/viewmodels/mesa_viewmodel.dart';
 import 'package:gestion_alimentos/views/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => EmpleadoViewModel()),
+        ChangeNotifierProvider(create: (_) => MesaViewModel())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
