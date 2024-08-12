@@ -33,7 +33,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           title: Text(
             isEditing ? 'Editar Empleado' : 'Agregar Empleado',
-            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.deepOrange),
+            style: const TextStyle(fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 1, 66, 14)),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -81,7 +81,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancelar', style: TextStyle(color: Colors.deepOrange)),
+              child: const Text('Cancelar', style: TextStyle(color: const Color.fromARGB(255, 1, 66, 14))),
             ),
             TextButton(
               onPressed: () async {
@@ -102,7 +102,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
                 }
                 Navigator.of(context).pop();
               },
-              child: Text(isEditing ? 'Actualizar' : 'Agregar', style: const TextStyle(color: Colors.deepOrange)),
+              child: Text(isEditing ? 'Actualizar' : 'Agregar', style: const TextStyle(color: const Color.fromARGB(255, 1, 66, 14))),
             ),
           ],
         );
@@ -119,7 +119,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
         return AlertDialog(
           backgroundColor: Colors.orange[50],
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          title: const Text('Generar Reporte', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.deepOrange)),
+          title: const Text('Generar Reporte', style: TextStyle(fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 1, 66, 14))),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -145,14 +145,14 @@ class _ReportesScreenState extends State<ReportesScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancelar', style: TextStyle(color: Colors.deepOrange)),
+              child: const Text('Cancelar', style: TextStyle(color:  Color.fromARGB(255, 1, 66, 14))),
             ),
             TextButton(
               onPressed: () {
                 print('Reporte generado para: $selectedPeriod');
                 Navigator.of(context).pop();
               },
-              child: const Text('Generar', style: TextStyle(color: Colors.deepOrange)),
+              child: const Text('Generar', style: TextStyle(color:  Color.fromARGB(255, 1, 66, 14))),
             ),
           ],
         );
@@ -196,17 +196,17 @@ class _ReportesScreenState extends State<ReportesScreen> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
                     margin: const EdgeInsets.only(bottom: 15.0),
                     child: ListTile(
-                      title: Text(nombre, style: const TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold)),
+                      title: Text(nombre, style: const TextStyle(color: const Color.fromARGB(255, 1, 66, 14), fontWeight: FontWeight.bold)),
                       subtitle: Text('$usuario - $rol', style: const TextStyle(color: Colors.black54)),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           IconButton(
-                            icon: const Icon(Icons.edit, color: Colors.deepOrange),
+                            icon: const Icon(Icons.edit, color: const Color.fromARGB(255, 1, 66, 14)),
                             onPressed: () => _showEmployeeDialog(context, empleado, isEditing: true),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.deepOrange),
+                            icon: const Icon(Icons.delete, color: const Color.fromARGB(255, 1, 66, 14)),
                             onPressed: () async {
                               await viewModel.deleteEmployee(empleado['idusuario']);
                             },
@@ -223,7 +223,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  foregroundColor: Colors.deepOrange,
+                  foregroundColor: const Color.fromARGB(255, 1, 66, 14),
                   padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 ),
