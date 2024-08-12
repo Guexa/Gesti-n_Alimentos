@@ -12,7 +12,7 @@ class CorredoresScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Corredores'),
-          backgroundColor: Colors.deepOrange,
+          backgroundColor: Colors.lime,
         ),
         body: Consumer<CorredoresViewModel>(
           builder: (context, viewModel, child) {
@@ -25,7 +25,7 @@ class CorredoresScreen extends StatelessWidget {
               height: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orangeAccent, Colors.deepOrange],
+                  colors: [Color.fromARGB(255, 235, 211, 76), Color.fromARGB(255, 3, 82, 1)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),

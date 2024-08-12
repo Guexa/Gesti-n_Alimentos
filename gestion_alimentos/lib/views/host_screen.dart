@@ -24,14 +24,14 @@ class _HostScreenState extends State<HostScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Host'),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.lime,
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.orangeAccent, Colors.deepOrange],
+            colors: [Color.fromARGB(255, 235, 211, 76), Color.fromARGB(255, 3, 82, 1)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

@@ -12,7 +12,7 @@ class CocinaScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Cocina'),
-          backgroundColor: Colors.deepOrange,
+          backgroundColor: Colors.lime,
         ),
         body: Consumer<CocinaViewModel>(
           builder: (context, viewModel, child) {
@@ -25,7 +25,7 @@ class CocinaScreen extends StatelessWidget {
               height: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orangeAccent, Colors.deepOrange],
+                  colors: [Color.fromARGB(255, 235, 211, 76), Color.fromARGB(255, 3, 82, 1)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),

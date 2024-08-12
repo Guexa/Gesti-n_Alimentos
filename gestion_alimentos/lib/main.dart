@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Sistema de Cocina',
         theme: ThemeData(
-          primarySwatch: Colors.orange,
+          primarySwatch: Colors.lime,
         ),
         home: const LoginScreen(),
       ),

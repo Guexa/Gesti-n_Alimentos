@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.deepOrange, Colors.orangeAccent],
+            colors: [Color.fromARGB(255, 235, 211, 76), Color.fromARGB(255, 3, 82, 1)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

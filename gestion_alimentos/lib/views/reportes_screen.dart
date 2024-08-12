@@ -166,15 +166,15 @@ class _ReportesScreenState extends State<ReportesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reportes'),
-        backgroundColor: Colors.deepOrange,
+        title: const Text('Gestión de Usuarios | Reportes'),
+        backgroundColor: Colors.lime,
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.orangeAccent, Colors.deepOrange],
+            colors: [Color.fromARGB(255, 235, 211, 76), Color.fromARGB(255, 3, 82, 1)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

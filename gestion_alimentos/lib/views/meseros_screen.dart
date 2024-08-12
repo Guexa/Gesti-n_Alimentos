@@ -14,7 +14,7 @@ class MeserosScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Meseros'),
-          backgroundColor: Colors.deepOrange,
+          backgroundColor: Colors.lime,
         ),
         body: Consumer<MeseroViewModel>(
           builder: (context, viewModel, child) {
@@ -27,7 +27,7 @@ class MeserosScreen extends StatelessWidget {
               height: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orangeAccent, Colors.deepOrange],
+                  colors: [Color.fromARGB(255, 235, 211, 76), Color.fromARGB(255, 3, 82, 1)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),

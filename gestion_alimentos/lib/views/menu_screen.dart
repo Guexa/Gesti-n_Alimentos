@@ -16,14 +16,14 @@ class MenuScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Menú'),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.lime,
       ),
       drawer: Drawer(
         child: Column(
           children: <Widget>[
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.deepOrange,
+                color: Color.fromARGB(255, 7, 62, 42),
               ),
               child: Row(
                 children: <Widget>[
@@ -51,7 +51,7 @@ class MenuScreen extends StatelessWidget {
                 children: <Widget>[
                   ListTile(
                     leading:
-                        const Icon(Icons.table_chart, color: Colors.deepOrange),
+                        const Icon(Icons.table_chart, color: Color.fromARGB(255, 7, 62, 42)),
                     title: const Text('Host'),
                     onTap: () {
                       Navigator.push(
@@ -62,7 +62,7 @@ class MenuScreen extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    leading: const Icon(Icons.person, color: Colors.deepOrange),
+                    leading: const Icon(Icons.person, color: Color.fromARGB(255, 7, 62, 42)),
                     title: const Text('Meseros'),
                     onTap: () {
                       Navigator.push(
@@ -74,7 +74,7 @@ class MenuScreen extends StatelessWidget {
                   ),
                   ListTile(
                     leading:
-                        const Icon(Icons.kitchen, color: Colors.deepOrange),
+                        const Icon(Icons.kitchen, color: Color.fromARGB(255, 7, 62, 42)),
                     title: const Text('Cocina'),
                     onTap: () {
                       Navigator.push(
@@ -86,7 +86,7 @@ class MenuScreen extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.cleaning_services,
-                        color: Colors.deepOrange),
+                        color: Color.fromARGB(255, 7, 62, 42)),
                     title: const Text('Corredores'),
                     onTap: () {
                       Navigator.push(
@@ -97,7 +97,7 @@ class MenuScreen extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    leading: const Icon(Icons.money, color: Colors.deepOrange),
+                    leading: const Icon(Icons.money, color: Color.fromARGB(255, 7, 62, 42)),
                     title: const Text('Caja'),
                     onTap: () {
                       Navigator.push(
@@ -109,7 +109,7 @@ class MenuScreen extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.ad_units_rounded,
-                        color: Colors.deepOrange),
+                        color: Color.fromARGB(255, 7, 62, 42)),
                     title: const Text('Gestión de Usuarios'),
                     onTap: () {
                       Navigator.push(
@@ -121,7 +121,7 @@ class MenuScreen extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.person_outline,
-                        color: Colors.deepOrange),
+                        color: Color.fromARGB(255, 7, 62, 42)),
                     title: const Text('Perfil'),
                     onTap: () {
                       Navigator.push(
@@ -154,7 +154,7 @@ class MenuScreen extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.orangeAccent, Colors.deepOrange],
+            colors: [Color.fromARGB(255, 235, 211, 76), Color.fromARGB(255, 3, 82, 1)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
