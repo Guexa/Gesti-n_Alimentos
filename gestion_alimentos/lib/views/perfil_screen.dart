@@ -1,46 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:gestion_alimentos/viewmodels/perfil_viewmodel.dart';
 
 class PerfilScreen extends StatelessWidget {
   const PerfilScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Perfil'),
-        backgroundColor: Colors.deepOrange,
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.orangeAccent, Colors.deepOrange],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+    const usuarioId = '12';
+
+    return ChangeNotifierProvider(
+      create: (context) => PerfilViewModel()..fetchPerfil(usuarioId),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Perfil'),
+          backgroundColor: Colors.deepOrange,
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.white24,
-                child: Icon(
-                  Icons.person,
-                  size: 60,
-                  color: Colors.white,
+        body: Consumer<PerfilViewModel>(
+          builder: (context, viewModel, child) {
+            final perfil = viewModel.perfil;
+
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.orangeAccent, Colors.deepOrange],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
               ),
-              const SizedBox(height: 30),
-              _buildProfileField('Nombre Completo', 'John Doe'),
-              const SizedBox(height: 20),
-              _buildProfileField('Usuario', 'johndoe123'),
-              const SizedBox(height: 20),
-              _buildProfileField('Rol', 'Administrador'),
-            ],
-          ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.white24,
+                      child: Icon(
+                        Icons.person,
+                        size: 60,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    _buildProfileField('Nombre Completo', perfil['name'] ?? 'No disponible'),
+                    const SizedBox(height: 20),
+                    _buildProfileField('Usuario', perfil['users'] ?? 'No disponible'),
+                    const SizedBox(height: 20),
+                    _buildProfileField('Rol', perfil['role'] ?? 'No disponible'),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
