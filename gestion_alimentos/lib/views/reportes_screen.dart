@@ -236,7 +236,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  foregroundColor: Colors.deepOrange,
+                  foregroundColor: const Color.fromARGB(255, 1, 66, 14),
                   padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 ),
